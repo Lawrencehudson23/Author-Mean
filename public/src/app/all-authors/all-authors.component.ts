@@ -12,6 +12,14 @@ export class AllAuthorsComponent implements OnInit {
   constructor(private _httpService: HttpService, private _router: Router) {}
 
   ngOnInit() {
+    this._httpService.getCurrentUser().subscribe((data: any) => {
+      if (data.user) {
+        //cool,there is the user
+      } else {
+        this._router.navigate(['/login']);
+      }
+    });
+
     this._httpService
       .getAuthors()
       .subscribe((data: any) => (this.authors = data.authors));
@@ -22,6 +30,12 @@ export class AllAuthorsComponent implements OnInit {
   deleteAuthor(id) {
     this._httpService.deleteAuthors(id).subscribe(() => {
       this.authors = this.authors.filter((author) => author._id !== id);
+    });
+  }
+
+  handleLogout() {
+    this._httpService.logoutUser().subscribe(() => {
+      this._router.navigate(['/login']);
     });
   }
 }

@@ -21,4 +21,18 @@ export class HttpService {
   updateAuthor(id, newData) {
     return this._httpClient.put('/api/authors/' + id, newData);
   }
+
+  loginUser(user) {
+    return this._httpClient.post('/api/users/login', user);
+  }
+  registerUser(user) {
+    return this._httpClient.post('/api/users', user);
+  }
+
+  logoutUser() {
+    return this._httpClient.delete('/api/users/logout');
+  }
+  getCurrentUser() {
+    return this._httpClient.get('/api/users/current');
+  }
 }
